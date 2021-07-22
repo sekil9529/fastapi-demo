@@ -130,3 +130,6 @@ dmypy.json
 
 # log
 *.log
+
+# pycharm
+.idea
