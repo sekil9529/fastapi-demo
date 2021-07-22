@@ -47,7 +47,7 @@ def create_app(env: Optional[str] = None) -> FastAPI:
     register_udf_middleware(app)
     # 异常捕获
     register_exception_handler(app)
-    # 配置router
+    # router
     register_router(app)
 
     return app

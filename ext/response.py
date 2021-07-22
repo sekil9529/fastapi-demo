@@ -12,7 +12,6 @@ from fastapi.encoders import jsonable_encoder
 from fastapi import status
 
 from .error_code import ECEnum
-from libs.error_code.exception import ECException
 from libs.datetime import to_unix_timestamp
 
 
