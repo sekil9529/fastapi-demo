@@ -8,6 +8,6 @@ class ECEnum(BaseECEnum):
     """错误码枚举类"""
 
     ServerError = ('500', '服务异常，请稍后重试')
-    InvalidParam = ('4001', '无效参数')
+    InvalidParam = ('401', '无效参数')
 
     TestError = ('TEST', '测试错误')

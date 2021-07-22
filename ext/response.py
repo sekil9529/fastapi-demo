@@ -39,7 +39,7 @@ class ExtJsonResponse(JSONResponse):
         ).encode("utf-8")
 
 
-def response_ok(data: Any) -> JSONResponse:
+def response_ok(data: Any = None) -> JSONResponse:
     """成功返回
 
     :param data: 数据
@@ -70,7 +70,7 @@ def response_fail(
     # 错误信息
     message: str = enum.message
     # 内容
-    content: Dict[str, Any] = dict(code=str(code), error=error, message=message, desc=desc)
+    content: Dict[str, Any] = dict(code=code, error=error, message=message, desc=desc)
     # 响应状态码
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR if code == '500' else status.HTTP_200_OK
     return ExtJsonResponse(content, status_code=status_code)

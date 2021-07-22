@@ -2,13 +2,9 @@
 
 from datetime import datetime
 
-from sqlalchemy import literal, Column, BIGINT, VARCHAR, DATETIME
+from sqlalchemy import Column, BIGINT, VARCHAR, DATETIME
 from sqlalchemy.dialects.mysql import TINYINT
-from sqlalchemy.ext.declarative import declarative_base
-
-
-# 创建对象的基类:
-Base = declarative_base()
+from libs.sqlalchemy import Base
 
 
 class User(Base):
