@@ -8,7 +8,7 @@ from libs.dict import ExtDict
 
 
 class BaseEvent(metaclass=abc.ABCMeta):
-    """基础事件"""
+    """事件基类"""
 
     __slots__ = ('_app', '_settings', 'ext')
 
