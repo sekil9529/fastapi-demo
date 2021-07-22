@@ -1,6 +1,6 @@
 # coding: utf-8
 
-"""全局异常捕获"""
+"""未知异常捕获"""
 
 from typing import Type
 from loguru import logger
@@ -10,8 +10,8 @@ from .base import BaseHandler
 from ext.response import response_fail
 
 
-class GlobalExecHandler(BaseHandler):
-    """全局异常处理"""
+class UnknownExecHandler(BaseHandler):
+    """未知异常捕获"""
 
     def get_exception(self) -> Type[Exception]:
         return Exception

@@ -33,5 +33,5 @@ async def test1(*, request: Request):
 
 
 async def test_error_code():
-    raise ECException(ECEnum.UnknownError)
+    raise ECException(ECEnum.TestError)
     return response_ok()

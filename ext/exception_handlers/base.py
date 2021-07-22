@@ -9,7 +9,7 @@ class BaseHandler(metaclass=abc.ABCMeta):
 
     __slots__ = ()
 
-    _exception: Optional[Exception] = None
+    _exception: Optional[Type[Exception]] = None
 
     @abc.abstractmethod
     def get_exception(self) -> Type[Exception]:
@@ -22,7 +22,7 @@ class BaseHandler(metaclass=abc.ABCMeta):
         pass
 
     @property
-    def exception(self):
+    def exception(self) -> Exception:
         """获取exception类"""
         if self.__class__._exception is None:
             self.__class__._exception = self.get_exception()

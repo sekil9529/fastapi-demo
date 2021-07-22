@@ -10,4 +10,4 @@ class ECEnum(BaseECEnum):
     ServerError = ('500', '服务异常，请稍后重试')
     InvalidParam = ('4001', '无效参数')
 
-    UnknownError = ('UNKNOWN', '未知错误')
+    TestError = ('TEST', '测试错误')
