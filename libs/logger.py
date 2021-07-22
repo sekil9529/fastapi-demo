@@ -32,4 +32,3 @@ def init_log(base_dir: str) -> None:
                serialize=False, encoding='utf-8', retention='10 days', backtrace=False, diagnose=False)
     logger.add(log_error, level='ERROR', format=format_str, rotation='0:00', enqueue=True,
                serialize=False, encoding='utf-8', retention='10 days', backtrace=False, diagnose=False)
-    return None

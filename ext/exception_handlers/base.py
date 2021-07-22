@@ -1,7 +1,7 @@
 # coding: utf-8
 
 import abc
-from typing import Optional
+from typing import Optional, Type
 from starlette.responses import JSONResponse
 
 
@@ -12,7 +12,7 @@ class BaseHandler(metaclass=abc.ABCMeta):
     _exception: Optional[Exception] = None
 
     @abc.abstractmethod
-    def get_exception(self) -> Exception:
+    def get_exception(self) -> Type[Exception]:
         """创建exception"""
         pass
 
