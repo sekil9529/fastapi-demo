@@ -7,7 +7,7 @@ from loguru import logger
 from starlette.responses import JSONResponse
 
 from .base import BaseHandler
-from ext.response import response_fail
+from core.response import response_fail
 
 
 class UnknownExecHandler(BaseHandler):

@@ -7,8 +7,8 @@ from starlette.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
 
 from .base import BaseHandler
-from ext.error_code import ECEnum
-from ext.response import response_fail
+from core.error_code import ECEnum
+from core.response import response_fail
 
 
 class RequestValidationExecHandler(BaseHandler):

@@ -6,7 +6,7 @@ from fastapi import Request, Body, Query
 from sqlalchemy.future import select
 from sqlalchemy import desc, update, insert
 from app.models import User
-from ext.response import response_ok
+from core.response import response_ok
 from libs.sqlalchemy.result import result_format
 from pydantic import BaseModel, validator
 

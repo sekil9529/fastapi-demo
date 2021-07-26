@@ -1,7 +1,7 @@
 # coding: utf-8
 
-from ext.error_code import ECEnum
-from ext.response import response_ok
+from core.error_code import ECEnum
+from core.response import response_ok
 from libs.error_code.exception import ECException
 
 """

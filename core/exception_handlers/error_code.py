@@ -7,7 +7,7 @@ from starlette.responses import JSONResponse
 
 from .base import BaseHandler
 from libs.error_code.exception import ECException
-from ext.response import response_fail
+from core.response import response_fail
 
 
 class ErrorCodeExecHandler(BaseHandler):

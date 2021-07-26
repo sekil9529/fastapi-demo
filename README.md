@@ -26,7 +26,7 @@
 │       ├── router.py                    # user模块router配置
 │       └── views.py                     # user模块相关视图
 
-├── ext                                  # 扩展模块
+├── core                                 # 核心模块
 
 │   ├── error_code.py                    # 错误码定义
 

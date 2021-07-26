@@ -7,9 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from settings import get_settings
 from settings.base import BaseSettings
-from ext.events import EVENT_TUPLE
-from ext.middlewares import MIDDLEWARE_TUPLE
-from ext.exception_handlers import EXC_HDL_TUPLE
+from core.events import EVENT_TUPLE
+from core.middlewares import MIDDLEWARE_TUPLE
+from core.exception_handlers import EXC_HDL_TUPLE
 from app.router import ROUTER_TUPLE
 from libs.logger import init_log
 
