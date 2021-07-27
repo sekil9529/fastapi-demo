@@ -97,5 +97,5 @@ def register_exception_handler(app: FastAPI) -> None:
     """注册异常捕获"""
     for exc_hdl_cls in EXC_HDL_TUPLE:
         exc_hdl = exc_hdl_cls()
-        app.add_exception_handler(exc_hdl.exception, exc_hdl.exc_handler)
+        app.add_exception_handler(exc_hdl.get_exception(), exc_hdl.exc_handler)
     return None
