@@ -2,9 +2,9 @@
 
 import abc
 from fastapi import FastAPI
+from types import SimpleNamespace
 
 from settings.base import BaseSettings
-from libs.dict import ExtDict
 
 
 class BaseEvent(metaclass=abc.ABCMeta):
@@ -15,7 +15,7 @@ class BaseEvent(metaclass=abc.ABCMeta):
     def __init__(self, app: FastAPI, settings: BaseSettings):
         self._app = app
         self._settings = settings
-        self.ext = ExtDict()  # 扩展
+        self.ext = SimpleNamespace()  # 扩展
 
     @abc.abstractmethod
     async def on_startup(self):

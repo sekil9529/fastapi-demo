@@ -68,7 +68,7 @@ def register_event(app: FastAPI, settings: BaseSettings) -> None:
 def register_udf_middleware(app: FastAPI) -> None:
     """注册自定义中间件"""
     for middleware_cls in MIDDLEWARE_TUPLE:
-        # 参考 app.middlewares('http')
+        # 参考 @app.middlewares('http')
         app.add_middleware(middleware_cls, fast_api_app=app)
     return None
 
