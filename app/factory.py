@@ -3,6 +3,7 @@ from logging.config import dictConfig
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from tortoise.contrib.fastapi import register_tortoise
 
 from settings import Settings
 from core.events import EVENTS
@@ -34,6 +35,10 @@ def create_app() -> FastAPI:
 
     # 事件
     register_event(app)
+
+    # 注册tortoise
+    register_tortoise(app, config=Settings.TORTOISE, generate_schemas=False)
+
     # cors
     register_cors(app)
     # 自定义中间件

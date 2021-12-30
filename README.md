@@ -1,2 +1,7 @@
 # fastapi-demo
-Python-3.7  + fastapi-0.65 + SQLAlchemy-1.4 + aiomysql
+
+# 环境
+- Python == 3.9
+- fastapi == 0.70 
+- tortoise-orm == 0.17
+- aiomysql
