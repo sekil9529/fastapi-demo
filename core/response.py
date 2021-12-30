@@ -1,21 +1,27 @@
-# coding: utf-8
+"""响应相关"""
 
-"""响应相关配置"""
-
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 import json
 from decimal import Decimal
 from json import JSONEncoder
 from datetime import datetime
+
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 from fastapi import status
+from pydantic import BaseModel, Field
 
 from .error_code import ECEnum
 from libs.datetime import to_unix_timestamp
 
+__all__ = (
+    "ExtJsonResponse",
+    "response_ok",
+    "response_fail",
+)
 
-class ExtJsonEncoder(JSONEncoder):
+
+class _ExtJsonEncoder(JSONEncoder):
     """扩展json编码器"""
     def default(self, o: Any) -> Any:
         if isinstance(o, datetime):
@@ -28,33 +34,49 @@ class ExtJsonEncoder(JSONEncoder):
 
 class ExtJsonResponse(JSONResponse):
     """扩展JsonResponse"""
+
     def render(self, content: Any) -> bytes:
         return json.dumps(
             content,
             ensure_ascii=False,
             allow_nan=False,
-            cls=ExtJsonEncoder,
+            cls=_ExtJsonEncoder,
             indent=None,
             separators=(",", ":"),
         ).encode("utf-8")
 
 
-def response_ok(data: Any = None) -> JSONResponse:
+class _ResponseModel(BaseModel):
+    """响应模型"""
+
+    # 错误码
+    code: str = "0"
+    # error码
+    error: str = ""
+    # 信息
+    message: str = "ok"
+    # 详情
+    desc: str = ""
+    # 数据
+    data: dict = Field(default_factory=dict)
+
+
+def response_ok(data: Optional[dict] = None, **kwargs) -> JSONResponse:
     """成功返回
 
     :param data: 数据
     :return:
     """
-    # 错误码
-    code: str = '0'
-    # 内容
-    content: Dict[str, Any] = dict(code=code, data=data)
+    if data is None:
+        data = {}
+    data.update(kwargs)
+    content: dict[str, Any] = _ResponseModel(data=data).dict()
     return ExtJsonResponse(content, status_code=status.HTTP_200_OK)
 
 
 def response_fail(
         enum: Optional[ECEnum] = None,
-        desc: Any = '') -> JSONResponse:
+        desc: Any = "") -> JSONResponse:
     """失败返回
 
     :param enum: 错误码枚举类
@@ -70,7 +92,7 @@ def response_fail(
     # 错误信息
     message: str = enum.message
     # 内容
-    content: Dict[str, Any] = dict(code=code, error=error, message=message, desc=desc)
+    content: dict[str, Any] = _ResponseModel(code=code, error=error, message=message, desc=desc).dict()
     # 响应状态码
-    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR if code == '500' else status.HTTP_200_OK
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR if code == "500" else status.HTTP_200_OK
     return ExtJsonResponse(content, status_code=status_code)

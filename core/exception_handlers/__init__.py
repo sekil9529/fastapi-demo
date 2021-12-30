@@ -1,12 +1,11 @@
-# coding: utf-8
-
+from .base import BaseHandler
 from .unknown import UnknownExecHandler
 from .request_validation import RequestValidationExecHandler
 from .error_code import ErrorCodeExecHandler
 
-
-EXC_HDL_TUPLE = (
-    UnknownExecHandler,
+# 异常捕获类
+EXCEPTION_HANDLERS: list[type[BaseHandler]] = [
     RequestValidationExecHandler,
     ErrorCodeExecHandler,
-)
+    UnknownExecHandler,
+]

@@ -1,30 +1,23 @@
-# coding: utf-8
-
-import abc
-from fastapi import FastAPI
 from fastapi import Request, Response
 from starlette.types import ASGIApp
 from starlette.middleware.base import BaseHTTPMiddleware, RequestResponseEndpoint, DispatchFunction
 
 
-class BaseMiddleware(BaseHTTPMiddleware, metaclass=abc.ABCMeta):
+class BaseMiddleware(BaseHTTPMiddleware):
+    """中间件基类"""
 
     def __init__(self,
                  app: ASGIApp,
-                 fast_api_app: FastAPI,
                  dispatch: DispatchFunction = None) -> None:
         super(BaseMiddleware, self).__init__(app, dispatch)
-        self.fast_api_app = fast_api_app
 
-    @abc.abstractmethod
     async def before_request(self, request: Request) -> None:
         """请求执行前"""
-        pass
+        raise NotImplementedError
 
-    @abc.abstractmethod
     async def before_response(self, request: Request, response: Response) -> None:
         """请求执行后返回前"""
-        pass
+        raise NotImplementedError
 
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         """调度"""

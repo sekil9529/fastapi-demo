@@ -1,8 +1,8 @@
 # coding: utf-8
 
-from ext.error_code import ECEnum
-from ext.response import response_ok
-from libs.error_code.exception import ECException
+from core.error_code import ECEnum
+from core.response import response_ok
+from core.error_code import ECException
 
 """
 request.headers
@@ -14,10 +14,12 @@ json_body = await request.json()
 
 
 async def test_hello():
+    """测试hello"""
     data = 'hello world!'
-    return response_ok(data)
+    return response_ok(keyword=data)
 
 
 async def test_error_code():
-    raise ECException(ECEnum.TestError)
+    """测试错误码"""
+    raise ECException(ECEnum.ServerError)
     return response_ok()

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from app import create_app
+from app.factory import create_app
 
 
-app = create_app('dev')
+app = create_app()

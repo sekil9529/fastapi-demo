@@ -1,3 +1,6 @@
+[server]
+debug = 1
+
 [db]
 user =
 password =
