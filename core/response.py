@@ -16,6 +16,7 @@ from libs.datetime import to_unix_timestamp
 
 __all__ = (
     "ExtJsonResponse",
+    "ResponseModel",
     "response_ok",
     "response_fail",
 )
@@ -46,19 +47,14 @@ class ExtJsonResponse(JSONResponse):
         ).encode("utf-8")
 
 
-class _ResponseModel(BaseModel):
+class ResponseModel(BaseModel):
     """响应模型"""
 
-    # 错误码
-    code: str = "0"
-    # error码
-    error: str = ""
-    # 信息
-    message: str = "ok"
-    # 详情
-    desc: str = ""
-    # 数据
-    data: dict = Field(default_factory=dict)
+    code: str = Field("0", title="错误码")
+    error: str = Field("", title="error码")
+    message: str = Field("ok", title="信息")
+    desc: str = Field("", title="详情")
+    data: dict = Field(default_factory=dict, title="数据")
 
 
 def response_ok(data: Optional[dict] = None, **kwargs) -> JSONResponse:
@@ -70,7 +66,7 @@ def response_ok(data: Optional[dict] = None, **kwargs) -> JSONResponse:
     if data is None:
         data = {}
     data.update(kwargs)
-    content: dict[str, Any] = _ResponseModel(data=data).dict()
+    content: dict[str, Any] = ResponseModel(data=data).dict()
     return ExtJsonResponse(content, status_code=status.HTTP_200_OK)
 
 
@@ -92,7 +88,7 @@ def response_fail(
     # 错误信息
     message: str = enum.message
     # 内容
-    content: dict[str, Any] = _ResponseModel(code=code, error=error, message=message, desc=desc).dict()
+    content: dict[str, Any] = ResponseModel(code=code, error=error, message=message, desc=desc).dict()
     # 响应状态码
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR if code == "500" else status.HTTP_200_OK
     return ExtJsonResponse(content, status_code=status_code)
