@@ -1,8 +1,14 @@
 # coding: utf-8
 
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse
+
 from core.error_code import ECEnum
 from core.response import response_ok
 from core.error_code import ECException
+from .schemas import HelloResSchema
+
+router: APIRouter = APIRouter(prefix="/demo", tags=["demo"])
 
 """
 request.headers
@@ -13,13 +19,17 @@ json_body = await request.json()
 """
 
 
-async def test_hello():
+@router.get("/hello", response_model=HelloResSchema)
+async def test_hello() -> JSONResponse:
     """测试hello"""
-    data = 'hello world!'
-    return response_ok(keyword=data)
+
+    keyword: str = 'hello world!'
+    data: HelloResSchema = HelloResSchema(keyword=keyword)
+    return response_ok(data)
 
 
-async def test_error_code():
+@router.get("/error")
+async def test_error_code() -> JSONResponse:
     """测试错误码"""
     raise ECException(ECEnum.ServerError)
     return response_ok()
