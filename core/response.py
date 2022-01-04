@@ -17,6 +17,7 @@ from libs.datetime import to_unix_timestamp
 __all__ = (
     "response_ok",
     "response_fail",
+    "ResponseModel",
 )
 
 # 响应数据类型
@@ -48,8 +49,8 @@ class _ExtJsonResponse(JSONResponse):
         ).encode("utf-8")
 
 
-class _ResponseSchema(BaseModel):
-    """响应模式"""
+class ResponseModel(BaseModel):
+    """响应模型"""
 
     code: str = Field("0", title="错误码")
     error: str = Field("", title="error码")
@@ -70,7 +71,7 @@ def response_ok(data: _RESPONSE_DATA_TYPE = None, /, **kwargs) -> JSONResponse:
         data = data.dict()
     if kwargs:
         data.update(kwargs)
-    content: dict[str, Any] = _ResponseSchema(data=data).dict()
+    content: dict[str, Any] = ResponseModel(data=data).dict()
     return _ExtJsonResponse(content, status_code=status.HTTP_200_OK)
 
 
@@ -92,7 +93,7 @@ def response_fail(
     # 错误信息
     message: str = enum.message
     # 内容
-    content: dict[str, Any] = _ResponseSchema(code=code, error=error, message=message, desc=desc).dict()
+    content: dict[str, Any] = ResponseModel(code=code, error=error, message=message, desc=desc).dict()
     # 响应状态码
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR if code == "500" else status.HTTP_200_OK
     return _ExtJsonResponse(content, status_code=status_code)
