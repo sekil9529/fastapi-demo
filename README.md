@@ -11,5 +11,9 @@
 
 1. 命令行
 ```shell
+# 本地
+python manage.py
+
+# 测试
 python -m gunicorn manage:app -b 0.0.0.0:8000 -w 2 -k uvicorn.workers.UvicornWorker --max-requests 10000
 ```
