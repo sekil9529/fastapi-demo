@@ -6,8 +6,8 @@ from app.user.pyd_models.response.list import (
     UserModel as UserResModel,
     Model as UserListResModel,
 )
-from app.models import User
-from app.utils.page import make_page
+from models import User
+from utils.page import make_page
 from core.response import response_ok
 
 

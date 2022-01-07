@@ -3,7 +3,7 @@ from fastapi import APIRouter
 from .views.hello import test_hello
 from .views.error import test_error_code
 from .pyd_models.response.hello import Model as HelloResModel
-from app.utils.pyd_model import res_model_factory
+from utils.pyd_model import res_model_factory
 
 router: APIRouter = APIRouter(prefix="/demo", tags=["demo"])
 

@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from .views.list import user_list
 from .pyd_models.response.list import Model as UserListResModel
-from app.utils.pyd_model import res_model_factory
+from utils.pyd_model import res_model_factory
 
 
 router: APIRouter = APIRouter(prefix="/user", tags=["用户"])

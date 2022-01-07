@@ -8,7 +8,7 @@ from libs.config import Config
 BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # 日志文件路径
-LOG_PATH: str = os.path.join(BASE_DIR, 'logs')
+LOG_PATH: str = os.path.join(BASE_DIR, "logs")
 
 if not os.path.exists(LOG_PATH):
     os.makedirs(LOG_PATH)
@@ -22,65 +22,65 @@ class Settings:
 
     DEBUG: bool = bool(int(CONF.server.debug))
 
-    TITLE: str = 'testFastAPI'
-    DESCRIPTION: str = 'FastAPI Demo'
+    TITLE: str = "demoFastAPI"
+    DESCRIPTION: str = "FastAPI Demo"
 
     # 文档地址 默认为docs
-    DOCS_URL: Optional[str] = '/api/docs'
+    DOCS_URL: Optional[str] = "/api/docs"
     # 文档关联请求数据接口
-    OPENAPI_URL: Optional[str] = '/api/openapi.json'
+    OPENAPI_URL: Optional[str] = "/api/openapi.json"
     # redoc 文档
-    REDOC_URL: Optional[str] = '/api/redoc'
+    REDOC_URL: Optional[str] = "/api/redoc"
 
     # 日志配置
     LOGGING: dict[str, Any] = {
-        'version': 1,
-        'loggers': {
-            '': {
-                'level': 'INFO',
-                'handlers': ['console', 'info_file', 'error_file'],
-                'propagate': False
+        "version": 1,
+        "loggers": {
+            "": {
+                "level": "INFO",
+                "handlers": ["console", "info_file", "error_file"],
+                "propagate": False
             },
-            'fastapi': {
-                'level': 'INFO',
-                'handlers': ['console', 'info_file', 'error_file'],
-                'propagate': False
+            "fastapi": {
+                "level": "INFO",
+                "handlers": ["console", "info_file", "error_file"],
+                "propagate": False
             },
-            'uvicorn': {
-                'level': 'INFO',
-                'handlers': ['console', 'info_file', 'error_file'],
-                'propagate': False
+            "uvicorn": {
+                "level": "INFO",
+                "handlers": ["console", "info_file", "error_file"],
+                "propagate": False
             },
         },
-        'formatters': {
-            'default': {
-                'format': '[%(asctime)s.%(msecs).3d] - [%(levelname)s] - [%(name)s:%(lineno)d] - [%(message)s]',
-                'datefmt': '%Y-%m-%d %H:%M:%S',
+        "formatters": {
+            "default": {
+                "format": "[%(asctime)s.%(msecs).3d] - [%(levelname)s] - [%(name)s:%(lineno)d] - [%(message)s]",
+                "datefmt": "%Y-%m-%d %H:%M:%S",
             }
         },
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-                'level': 'INFO',
-                'formatter': 'default',
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "level": "INFO",
+                "formatter": "default",
             },
-            'info_file': {
-                'class': 'logging.handlers.RotatingFileHandler',
-                'filename': os.path.join(LOG_PATH, 'info.log'),
-                'maxBytes': 5 * 1024 * 1024,
-                'backupCount': 10,
-                'encoding': 'utf8',
-                'level': 'INFO',
-                'formatter': 'default',
+            "info_file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": os.path.join(LOG_PATH, "info.log"),
+                "maxBytes": 5 * 1024 * 1024,
+                "backupCount": 10,
+                "encoding": "utf8",
+                "level": "INFO",
+                "formatter": "default",
             },
-            'error_file': {
-                'class': 'logging.handlers.RotatingFileHandler',
-                'filename': os.path.join(LOG_PATH, 'error.log'),
-                'maxBytes': 5 * 1024 * 1024,
-                'backupCount': 10,
-                'encoding': 'utf8',
-                'level': 'ERROR',
-                'formatter': 'default',
+            "error_file": {
+                "class": "logging.handlers.RotatingFileHandler",
+                "filename": os.path.join(LOG_PATH, "error.log"),
+                "maxBytes": 5 * 1024 * 1024,
+                "backupCount": 10,
+                "encoding": "utf8",
+                "level": "ERROR",
+                "formatter": "default",
             },
         },
     }
@@ -108,7 +108,7 @@ class Settings:
         },
         "apps": {
             "models": {
-                "models": ["app.models"],
+                "models": ["models"],
                 "default_connection": "default",
             }
         },
