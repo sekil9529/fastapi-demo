@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from .demo.views import router as demo_router
-from .user.views import router as user_router
+from .demo.router import router as demo_router
+from .user.router import router as user_router
 
 # 路由
 ROUTERS: list[APIRouter] = [

@@ -1,7 +1,6 @@
-# coding: utf-8
 
 
-class ExtDict(dict):
+class AttrDict(dict):
     """扩展字典"""
 
     def __setattr__(self, key, value):

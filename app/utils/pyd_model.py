@@ -13,7 +13,7 @@ def res_model_factory(model: type[BaseModel], name: str = "") -> type[ResponseMo
     :return: 新模型
     """
     if not name:
-        name = f"_{model.__name__}__{ResponseModel.__name__}"
+        name = f"_{model.__name__}__{id(model)}__{ResponseModel.__name__}"
     dict_: dict[str, dict] = {
         "__annotations__": {"data": model},
     }
