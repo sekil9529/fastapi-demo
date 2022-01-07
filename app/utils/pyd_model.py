@@ -1,5 +1,3 @@
-from typing import Any
-
 from pydantic import BaseModel
 
 from core.response import ResponseModel
