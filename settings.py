@@ -116,3 +116,6 @@ class Settings:
         # set session time_zone
         "timezone": "Asia/Shanghai",
     }
+
+    # 自定义参数
+    UD_TEST_URL: str = CONF.request.test_url

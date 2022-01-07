@@ -7,3 +7,6 @@ password =
 host =
 port = 3306
 database =
+
+[request]
+test_url = http://127.0.0.1:8000/api
