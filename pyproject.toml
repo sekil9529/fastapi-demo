@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "fastapi-demo"
+version = "0.1.0"
+description = ""
+authors = ["liuseki <liuseki@163.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = ">=0.115.12"
+orjson = "^3.10.16"
+aiomysql = "^0.2.0"
+tortoise-orm = "^0.25.0"
+gunicorn = "^23.0.0"
+pydantic = ">2.11"
+uvicorn = "^0.34.2"
+httpx = "^0.28.1"
+pyyaml = "^6.0.2"
+concurrent-log-handler = "^0.9.25"
+
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+priority = "primary"
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple"
+priority = "supplemental"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

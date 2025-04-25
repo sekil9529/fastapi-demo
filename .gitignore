@@ -129,6 +129,10 @@ dmypy.json
 .pyre/
 
 # log
-*.log
+log/*
 
 .idea/
+
+!*/.gitkeep
+
+# 配置文件

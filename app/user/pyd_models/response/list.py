@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, validator
 
-from libs.datetime import to_unix_timestamp
+from util.datetime import to_unix_timestamp
 
 
 class UserModel(BaseModel):

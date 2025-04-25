@@ -1,39 +1,35 @@
-from typing import Optional, Any
+# coding: utf-8
 
 import os
+import typing as t
 
-from libs.config import Config
-
-# 项目根路径
-BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# 日志文件路径
-LOG_PATH: str = os.path.join(BASE_DIR, "logs")
-
-if not os.path.exists(LOG_PATH):
-    os.makedirs(LOG_PATH)
-
-# 配置
-CONF: Config = Config(".env")
+from helper.config import Config
+from util.py_yaml import PyYaml
 
 
-class Settings:
+class Setting:
     """配置类"""
 
-    DEBUG: bool = bool(int(CONF.server.debug))
+    _BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _LOG_DIR = os.path.join(_BASE_DIR, "log")
+    _CONFIG_DIR = os.path.join(_BASE_DIR, "config")
 
+    # 配置
+    CONFIG = Config(**PyYaml(os.path.join(_CONFIG_DIR, "config.yaml")).to_dict())
+
+    DEBUG: bool = CONFIG.server.debug
     TITLE: str = "demoFastAPI"
     DESCRIPTION: str = "FastAPI Demo"
 
     # 文档地址 默认为docs
-    DOCS_URL: Optional[str] = "/api/docs"
+    DOCS_URL: str | None = "/api/docs"
     # 文档关联请求数据接口
-    OPENAPI_URL: Optional[str] = "/api/openapi.json"
+    OPENAPI_URL: str | None = "/api/openapi.json"
     # redoc 文档
-    REDOC_URL: Optional[str] = "/api/redoc"
+    REDOC_URL: str | None = "/api/redoc"
 
     # 日志配置
-    LOGGING: dict[str, Any] = {
+    LOGGING: dict[str, t.Any] = {
         "version": 1,
         "loggers": {
             "": {
@@ -65,19 +61,19 @@ class Settings:
                 "formatter": "default",
             },
             "info_file": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "filename": os.path.join(LOG_PATH, "info.log"),
-                "maxBytes": 5 * 1024 * 1024,
-                "backupCount": 10,
+                "class": "concurrent_log_handler.ConcurrentRotatingFileHandler",
+                "filename": os.path.join(_LOG_DIR, "info.log"),
+                "maxBytes": 1024 * 1024 * 32,
+                "backupCount": 1,
                 "encoding": "utf8",
                 "level": "INFO",
                 "formatter": "default",
             },
             "error_file": {
-                "class": "logging.handlers.RotatingFileHandler",
-                "filename": os.path.join(LOG_PATH, "error.log"),
-                "maxBytes": 5 * 1024 * 1024,
-                "backupCount": 10,
+                "class": "concurrent_log_handler.ConcurrentRotatingFileHandler",
+                "filename": os.path.join(_LOG_DIR, "error.log"),
+                "maxBytes": 1024 * 1024 * 128,
+                "backupCount": 5,
                 "encoding": "utf8",
                 "level": "ERROR",
                 "formatter": "default",
@@ -86,16 +82,16 @@ class Settings:
     }
 
     # tortoise
-    TORTOISE: dict[str, Any] = {
+    TORTOISE: dict[str, t.Any] = {
         "connections": {
             "default": {
                 "engine": "tortoise.backends.mysql",
                 "credentials": {
-                    "host": CONF.db.host,
-                    "port": CONF.db.port,
-                    "user": CONF.db.user,
-                    "password": CONF.db.password,
-                    "database": CONF.db.database,
+                    "host": CONFIG.db.host,
+                    "port": CONFIG.db.port,
+                    "user": CONFIG.db.user,
+                    "password": CONFIG.db.password,
+                    "database": CONFIG.db.database,
                     "maxsize": 2,
                     # 注意：启动时直接创建2个session
                     "minsize": 2,
@@ -106,7 +102,7 @@ class Settings:
                 }
             }
         },
-        "apps": {
+        "app": {
             "models": {
                 "models": ["models"],
                 "default_connection": "default",
@@ -118,4 +114,4 @@ class Settings:
     }
 
     # 自定义参数
-    UD_TEST_URL: str = CONF.request.test_url
+    UD_TEST_URL: str = CONFIG.request.test_url

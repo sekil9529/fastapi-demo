@@ -12,7 +12,7 @@ from fastapi import status
 from pydantic import BaseModel, Field
 
 from .error_code import ECEnum
-from libs.datetime import to_unix_timestamp
+from util.datetime import to_unix_timestamp
 
 __all__ = (
     "response_ok",
