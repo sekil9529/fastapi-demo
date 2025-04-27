@@ -7,6 +7,7 @@
     - param/: 参数相关
       - request: 请求参数
       - response: 响应参数
+      - router.py: 子路由
     - view/: 视图
   - application.py: app的工厂方法
   - router.py: 总路由
