@@ -15,7 +15,7 @@ class Setting:
     _CONFIG_DIR = os.path.join(_BASE_DIR, "config")
 
     # 配置
-    CONFIG = Config(**PyYaml(os.path.join(_CONFIG_DIR, "config/config.yaml")).to_dict())
+    CONFIG = Config(**PyYaml(os.path.join(_CONFIG_DIR, "config.yaml")).to_dict())
 
     DEBUG: bool = CONFIG.server.debug
     TITLE: str = "demoFastAPI"
