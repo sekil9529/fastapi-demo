@@ -26,6 +26,7 @@ class RequestConfig(ExtraIgnoreModel):
 
 class Config(ExtraIgnoreModel):
 
-    server: ServerConfig
-    db: DatabaseConfig
-    request: RequestConfig
+    server: ServerConfig = Field(default_factory=ServerConfig, description="服务配置")
+    db: DatabaseConfig = Field(default_factory=DatabaseConfig, description="数据库配置")
+    request: RequestConfig = Field(default_factory=RequestConfig, description="请求配置")
+    slow_timeout: float = Field(1.0, description="慢请求阈值")

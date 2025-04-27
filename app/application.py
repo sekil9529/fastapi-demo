@@ -1,7 +1,6 @@
 # coding: utf-8
 
 import logging
-import typing as t
 from logging.config import dictConfig
 
 from fastapi import FastAPI
@@ -9,12 +8,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise.contrib.fastapi import register_tortoise
 
-from setting import Settings
-from core.events import EVENTS
-from core.middlewares import MIDDLEWARES
-from core.exception_handlers import EXCEPTION_HANDLERS
+from setting import Setting
+from event import EVENTS
+from middleware import MIDDLEWARES
+from exception_handler import EXCEPTION_HANDLERS
 from app.router import ROUTERS
 from util.log_record import PyLogRecord
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 def create_app() -> FastAPI:
@@ -23,58 +25,59 @@ def create_app() -> FastAPI:
     :return: FastAPI
     """
 
+    """配置日志"""
     logging.setLogRecordFactory(PyLogRecord)
+    dictConfig(Setting.LOGGING)
 
-    # 配置日志
-    dictConfig(Settings.LOGGING)
-
-    # 创建app
+    """创建应用"""
     app: "FastAPI" = FastAPI(
-        debug=Settings.DEBUG,
-        title=Settings.TITLE,
-        description=Settings.DESCRIPTION,
-        docs_url=Settings.DOCS_URL,
-        openapi_url=Settings.OPENAPI_URL,
-        redoc_url=Settings.REDOC_URL
+        debug=Setting.DEBUG,
+        title=Setting.TITLE,
+        description=Setting.DESCRIPTION,
+        docs_url=Setting.DOCS_URL,
+        openapi_url=Setting.OPENAPI_URL,
+        redoc_url=Setting.REDOC_URL,
     )
 
-    # 事件
-    register_event(app)
-
+    """事件"""
+    # 自定义事件
+    _register_event(app)
     # 注册tortoise
-    register_tortoise(app, config=Settings.TORTOISE, generate_schemas=False)
+    register_tortoise(app, config=Setting.TORTOISE, generate_schemas=False)
 
+    """中间件"""
     # cors
-    register_cors(app)
-    # 自定义中间件
-    register_udf_middleware(app)
-    # 异常捕获
-    register_exception_handler(app)
-    # router
-    register_router(app)
+    _register_cors(app)
+    # 请求中间件
+    _register_request_middleware(app)
+
+    """异常捕获"""
+    _register_exception_handler(app)
+
+    """路由"""
+    _register_router(app)
 
     return app
 
 
-def register_event(app: "FastAPI") -> None:
+def _register_event(app: "FastAPI") -> None:
     """注册事件"""
 
     for event_cls in EVENTS:
         event = event_cls(app)
-        if hasattr(event, 'on_startup'):
-            app.add_event_handler('startup', event.on_startup)
-        if hasattr(event, 'on_shutdown'):
-            app.add_event_handler('shutdown', event.on_shutdown)
+        app.add_event_handler('startup', event.on_startup)
+        app.add_event_handler('shutdown', event.on_shutdown)
 
 
-def register_udf_middleware(app: "FastAPI") -> None:
-    """注册自定义中间件"""
+def _register_request_middleware(app: "FastAPI") -> None:
+    """注册请求中间件"""
+
     for middleware_cls in MIDDLEWARES:
-        # 参考 app.middlewares('http')
+        # 参考 app.middleware('http')
         app.add_middleware(middleware_cls)
 
 
-def register_router(app: FastAPI, prefix: t.Optional[str] = '/api') -> None:
+def _register_router(app: "FastAPI", prefix: str | None = '/api') -> None:
     """注册router"""
 
     if prefix is None:
@@ -83,8 +86,9 @@ def register_router(app: FastAPI, prefix: t.Optional[str] = '/api') -> None:
         app.include_router(router_, prefix=prefix)
 
 
-def register_cors(app: FastAPI) -> None:
+def _register_cors(app: "FastAPI") -> None:
     """注册cors"""
+
     app.add_middleware(
         CORSMiddleware,
         allow_origins=['*'],
@@ -94,7 +98,7 @@ def register_cors(app: FastAPI) -> None:
     )
 
 
-def register_exception_handler(app: FastAPI) -> None:
+def _register_exception_handler(app: "FastAPI") -> None:
     """注册异常捕获"""
 
     for exc_hdl_cls in EXCEPTION_HANDLERS:

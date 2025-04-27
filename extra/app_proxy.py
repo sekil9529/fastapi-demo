@@ -25,14 +25,14 @@ class AppProxy(t.Generic[_T]):
         self._key_name = key_name
         self._app: t.Optional["FastAPI"] = None
 
-    def set_obj(self, app: "FastAPI", obj: _T) -> None:
+    def bind_obj(self, app: "FastAPI", obj: _T) -> None:
         """设置对象"""
 
         self._app = app
         setattr(self._app.state, self._key_name, obj)
 
     def get_obj(self) -> _T:
-        """获取mongo客户端"""
+        """获取对象"""
 
         obj: _T | None = getattr(self._app.state, self._key_name, None)
         if obj is None:

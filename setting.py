@@ -10,12 +10,12 @@ from util.py_yaml import PyYaml
 class Setting:
     """配置类"""
 
-    _BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     _LOG_DIR = os.path.join(_BASE_DIR, "log")
     _CONFIG_DIR = os.path.join(_BASE_DIR, "config")
 
     # 配置
-    CONFIG = Config(**PyYaml(os.path.join(_CONFIG_DIR, "config.yaml")).to_dict())
+    CONFIG = Config(**PyYaml(os.path.join(_CONFIG_DIR, "config/config.yaml")).to_dict())
 
     DEBUG: bool = CONFIG.server.debug
     TITLE: str = "demoFastAPI"
@@ -31,6 +31,7 @@ class Setting:
     # 日志配置
     LOGGING: dict[str, t.Any] = {
         "version": 1,
+        "disable_existing_loggers": False,
         "loggers": {
             "": {
                 "level": "INFO",
@@ -50,7 +51,16 @@ class Setting:
         },
         "formatters": {
             "default": {
-                "format": "[%(asctime)s.%(msecs).3d] - [%(levelname)s] - [%(name)s:%(lineno)d] - [%(message)s]",
+                "format": " - ".join([
+                    "[%(asctime)s.%(msecs).3d]",
+                    "[%(levelname)s]",
+                    "[%(process)d]",
+                    "[%(method)s]",
+                    "[%(path)s]",
+                    "[%(name)s]",
+                    "[%(filename)s:%(lineno)d]",
+                    "[%(message)s]",
+                ]),
                 "datefmt": "%Y-%m-%d %H:%M:%S",
             }
         },
@@ -85,7 +95,8 @@ class Setting:
     TORTOISE: dict[str, t.Any] = {
         "connections": {
             "default": {
-                "engine": "tortoise.backends.mysql",
+                # "engine": "tortoise.backends.mysql",
+                "engine": "extra.tortoise.backends.mysql",
                 "credentials": {
                     "host": CONFIG.db.host,
                     "port": CONFIG.db.port,
@@ -102,9 +113,9 @@ class Setting:
                 }
             }
         },
-        "app": {
+        "apps": {
             "models": {
-                "models": ["models"],
+                "models": ["model"],
                 "default_connection": "default",
             }
         },
@@ -115,3 +126,4 @@ class Setting:
 
     # 自定义参数
     UD_TEST_URL: str = CONFIG.request.test_url
+    UD_SLOW_TIMEOUT: float = CONFIG.slow_timeout

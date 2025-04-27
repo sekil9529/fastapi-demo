@@ -52,12 +52,6 @@ class _RecordProxy(_RecordBase):
         value = self._get_value()
         return getattr(value, item)
 
-    def __setattr__(self, key, value):
-
-        value = self._get_value()
-        setattr(value, key, value)
-        self._set_value(value)
-
 
 record_proxy = _RecordProxy()
 

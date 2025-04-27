@@ -10,3 +10,5 @@ db:
 
 request:
   test_url: "http://127.0.0.1:8000/api"
+
+slow_timeout: 3.0

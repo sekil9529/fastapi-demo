@@ -133,6 +133,8 @@ log/*
 
 .idea/
 
-!*/.gitkeep
+## 配置文件
+config/*.yaml
+!config/*.*.yaml
 
-# 配置文件
+!*/.gitkeep
