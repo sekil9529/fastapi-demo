@@ -15,7 +15,7 @@
   - config.yaml: 应用配置
   - config.test.yaml: 测试配置留档
 - event/: 事件
-- exception_handler/: 一场处理
+- exception_handler/: 异常处理
 - middleware/: 请求中间件
 - model/: 数据库模型
 - util/: 通用工具集目录（不限制当前项目）
