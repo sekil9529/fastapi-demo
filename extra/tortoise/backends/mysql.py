@@ -22,7 +22,7 @@ class _AutoReconnectWrapperProxy:
     async def __aenter__(self) -> "T_conn":
 
         conn = await self._wrapper.__aenter__()
-        conn.ping(reconnect=True)
+        await conn.ping(reconnect=True)
         return conn
 
 
