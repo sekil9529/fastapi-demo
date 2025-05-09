@@ -1,12 +1,15 @@
-from fastapi import APIRouter
+# coding: utf-8
 
-from .demo.router import router as demo_router
-from .user.router import router as user_router
-from .request.router import router as req_router
+import typing as t
+
+if t.TYPE_CHECKING:
+    from fastapi import APIRouter
+
+from app.demo.router import router as demo_router
+from app.user.router import router as user_router
 
 # 路由
-ROUTERS: list[APIRouter] = [
+ROUTERS: list["APIRouter"] = [
     demo_router,
     user_router,
-    req_router,
 ]

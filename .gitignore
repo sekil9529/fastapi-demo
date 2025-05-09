@@ -129,6 +129,15 @@ dmypy.json
 .pyre/
 
 # log
-*.log
+log/*
 
 .idea/
+
+# pytet
+report.html
+
+## 配置文件
+config/*.yaml
+!config/*.*.yaml
+
+!*/.gitkeep
